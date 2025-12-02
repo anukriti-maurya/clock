@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Clock & Today's Date - For Students</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#222; color:#fff; }
+    .hero { 
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg');
+      background-size: cover;
+      background-position: center;
+      padding: 30px;
+    }
+    .card {
+      background: rgba(0,0,0,0.55);
+      padding: 30px 40px;
+      border-radius: 12px;
+      text-align:center;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+    }
+    .title { font-size: 20px; margin-bottom: 10px; opacity: 0.9; }
+    .clock {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 6px 0 4px;
+    }
+    .ampm { font-size: 18px; vertical-align: top; margin-left:6px; }
+    .date {
+      font-size: 18px;
+      margin-top: 8px;
+      opacity: 0.95;
+    }
+    .note { font-size: 13px; margin-top: 14px; opacity: 0.8; }
+    @media (max-width:480px){
+      .clock { font-size: 38px; }
+      .card { padding:20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="card">
+      <div class="title"> Clock — Live Time & Date</div>
+      <div>
+        <span id="time" class="clock">00:00:00</span>
+        <span id="ampm" class="ampm">AM</span>
+      </div>
+      <div id="date" class="date">Loading date...</div>
+      <div class="note">This clock updates every second. Useful for study schedules and time management.</div>
+    </div>
+  </div>
+  <script>
+    function pad(n){ return n<10 ? '0'+n : n; }
+    function updateClock(){
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 -> 12
+      const timeString = pad(hours) + ':' + pad(minutes) + ':' + pad(seconds);
+      document.getElementById('time').textContent = timeString;
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateString = now.toLocaleDateString(undefined, options);
+      document.getElementById('date').textContent = dateString;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
+output
